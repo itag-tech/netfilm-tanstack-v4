@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`Home page > should render as usual 1`] = `
+exports[`Home page add a usal snapshot > should render as usual 1`] = `
 <div>
   <div
     class="min-h-screen max-w-full overflow-x-hidden"
@@ -25,6 +25,16 @@ exports[`Home page > should render as usual 1`] = `
             placeholder="Rechercher un film"
             value=""
           />
+        </div>
+        <div
+          class="flex flex-row w-full mt-12"
+          id="movie-collection"
+        >
+          <p
+            class="m-auto"
+          >
+            Effectuez une recherche d'au moins 3 caractères
+          </p>
         </div>
       </main>
     </div>
