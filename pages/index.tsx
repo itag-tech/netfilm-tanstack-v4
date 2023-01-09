@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-query'
 
 import Layout from '../components/Layout'
-import Collection from '../components/Collection/Collection'
+import Collection from '../components/Collection'
 import SearchBar from '../components/SearchBar'
 
 

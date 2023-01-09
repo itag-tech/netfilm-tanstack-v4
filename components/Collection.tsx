@@ -2,12 +2,12 @@ import React, { FC } from 'react'
 import clsx from 'clsx'
 import Link from 'next/link'
 
-import { useSearch } from '../../providers/SearchProvider'
-import { getMovies } from '../../api/movieApi'
-import { getUrlSearchMovieByTitle } from '../../utils/movieUtils'
+import { useSearch } from '../providers/SearchProvider'
+import { getMovies } from '../api/movieApi'
+import { getUrlSearchMovieByTitle } from '../utils/movieUtils'
 
-import MovieCard from '../Card/Card'
-import { Spinner } from '../Spinner'
+import MovieCard from './Card/Card'
+import { Spinner } from './Spinner'
 import { useQuery } from '@tanstack/react-query'
 
 const Collection: FC = () => {
@@ -28,8 +28,7 @@ const Collection: FC = () => {
   // conditionn rendering ------------------------------
   // case 1 - error
   if (error) return <CollectionLayout><p>Une erreur est survenue</p></CollectionLayout>
-  // case 2 - already fetched`
-  // eslint-disable-next-line react/no-unescaped-entities
+  // case 2 - already fetched
   if (!isFetched) return <CollectionLayout><p className={clsx("m-auto")}>Effectuez une recherche d'au moins 3 caractères</p></CollectionLayout>
   // case 2 - loading
   if (isLoading) return <CollectionLayout><Spinner color={"purple"} size={"80px"} /></CollectionLayout>
