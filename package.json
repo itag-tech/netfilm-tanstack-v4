@@ -13,6 +13,7 @@
   "dependencies": {
     "@material-tailwind/react": "^1.2.4",
     "@next/font": "13.1.0",
+    "@tanstack/react-query": "^4.22.0",
     "clsx": "1.2.1",
     "dotenv": "16.0.3",
     "eslint": "8.30.0",

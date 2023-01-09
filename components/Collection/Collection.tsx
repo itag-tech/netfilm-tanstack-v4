@@ -8,28 +8,36 @@ import { getUrlSearchMovieByTitle } from '../../utils/movieUtils'
 
 import MovieCard from '../Card/Card'
 import { Spinner } from '../Spinner'
-import { Movie } from '../../models/Movie'
+import { useQuery } from '@tanstack/react-query'
 
 const Collection: FC = () => {
 
   const { search: inputValue } = useSearch()
 
-  // const isCallable: boolean = inputValue.length >= 3
-  // const url = React.useMemo<string>(() => getUrlSearchMovieByTitle(inputValue), [inputValue])
+  const isCallable: boolean = inputValue.length >= 3
+  const url = React.useMemo<string>(() => getUrlSearchMovieByTitle(inputValue), [inputValue])
+  const { isFetched, isLoading, data, error } = useQuery({
+    queryKey: ['movies', inputValue],
+    queryFn: () => getMovies(url),
+    enabled: isCallable,
+  })
 
-  const movies = [] as Movie[]
+  const movies = data?.Search ?? []
   const isMovies = movies.length > 0
 
   // conditionn rendering ------------------------------
-  // // case 1 - error
-  // if (error) return <CollectionLayout><p>Une erreur est survenue</p></CollectionLayout>
-  // // case 2 - loading
-  // if (isLoading) return <CollectionLayout><Spinner color={"purple"} size={"80px"} /></CollectionLayout>
+  // case 1 - error
+  if (error) return <CollectionLayout><p>Une erreur est survenue</p></CollectionLayout>
+  // case 2 - already fetched`
+  // eslint-disable-next-line react/no-unescaped-entities
+  if (!isFetched) return <CollectionLayout><p className={clsx("m-auto")}>Effectuez une recherche d'au moins 3 caractères</p></CollectionLayout>
+  // case 2 - loading
+  if (isLoading) return <CollectionLayout><Spinner color={"purple"} size={"80px"} /></CollectionLayout>
   // case 3 - no result
   if (inputValue && !isMovies) return (
     <CollectionLayout>
       <p className={clsx("m-auto")}>
-        Aucun résultat - Assurez-vous que la recherche fasse au moins 3 caractères
+        Aucun résultat
       </p>
     </CollectionLayout>
   )

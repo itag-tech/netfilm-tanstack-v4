@@ -1,12 +1,22 @@
 import React from 'react'
 import Head from 'next/head'
 import { NextPage } from 'next'
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 
 import Layout from '../components/Layout'
 import Collection from '../components/Collection/Collection'
 import SearchBar from '../components/SearchBar'
 
+
 const Home: NextPage = () => {
+
+  const queryClient = React.useMemo(() => {
+    return new QueryClient()
+  }, [])
+
   return (
     <Layout>
       <Head>
@@ -15,8 +25,10 @@ const Home: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SearchBar />
-      <Collection />
+      <QueryClientProvider client={queryClient}>
+        <SearchBar />
+        <Collection />
+      </QueryClientProvider>
     </ Layout>
   )
 }
