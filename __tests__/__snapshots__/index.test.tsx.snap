@@ -23,6 +23,7 @@ exports[`Home page add a usal snapshot > should render as usual 1`] = `
           <input
             class="text-center rounded w-full md:max-w-md p-3"
             placeholder="Rechercher un film"
+            type="text"
             value=""
           />
         </div>

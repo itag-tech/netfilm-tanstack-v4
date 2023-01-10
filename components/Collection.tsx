@@ -1,31 +1,28 @@
 import React, { FC } from 'react'
 import clsx from 'clsx'
 import Link from 'next/link'
+import { useQuery } from '@tanstack/react-query'
 
 import { useSearch } from '../providers/SearchProvider'
 import { getMovies } from '../api/movieApi'
-import { getUrlSearchMovieByTitle } from '../utils/movieUtils'
 
 import MovieCard from './Card/Card'
 import { Spinner } from './Spinner'
-import { useQuery } from '@tanstack/react-query'
 
 const Collection: FC = () => {
 
   const { search: inputValue } = useSearch()
 
-  const isCallable: boolean = inputValue.length >= 3
-  const url = React.useMemo<string>(() => getUrlSearchMovieByTitle(inputValue), [inputValue])
   const { isFetched, isLoading, data, error } = useQuery({
     queryKey: ['movies', inputValue],
-    queryFn: () => getMovies(url),
-    enabled: isCallable,
+    queryFn: () => getMovies(inputValue),
+    enabled: inputValue.length >= 3,
   })
 
   const movies = data?.Search ?? []
   const isMovies = movies.length > 0
 
-  // conditionn rendering ------------------------------
+  // conditionnal rendering ------------------------------
   // case 1 - error
   if (error) return <CollectionLayout><p>Une erreur est survenue</p></CollectionLayout>
   // case 2 - already fetched

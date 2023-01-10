@@ -1,13 +1,13 @@
 
 import React from 'react'
-import useSWR from 'swr'
 import clsx from 'clsx'
 import Image from 'next/image'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { useQuery } from '@tanstack/react-query'
 
 import { getMovie } from '../../api/movieApi'
-import { getPoster, getUrlSearchMovieById } from '../../utils/movieUtils'
+import { getPoster } from '../../utils/movieUtils'
 
 import Layout from '../../components/Layout'
 import { Spinner } from '../../components/Spinner'
@@ -17,10 +17,10 @@ const MovieDetail: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
 
-  const url = React.useMemo<string>(() => getUrlSearchMovieById(id as string), [id])
-  const fetcher = React.useCallback(async () => await getMovie(url), [url])
-
-  const { data: movie, error, isLoading } = useSWR(url, fetcher)
+  const { isLoading, data: movie, error } = useQuery({
+    queryKey: ['movie', id],
+    queryFn: () => getMovie(id as string),
+  })
 
   if (error) return <Layout><p>Une erreur est survenue</p></Layout>
   if (isLoading) return <Layout><Spinner color={"purple"} size={"80px"} /></Layout>

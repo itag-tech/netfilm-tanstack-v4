@@ -18,6 +18,7 @@ const SearchBar: FC = () => {
         className={clsx("text-center rounded w-full md:max-w-md p-3")}
         value={search}
         placeholder="Rechercher un film"
+        type={"text"}
       />
     </div>
   )

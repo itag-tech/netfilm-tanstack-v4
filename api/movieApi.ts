@@ -1,9 +1,12 @@
 import axios from 'axios'
 import { MovieCollectionResponse } from '../models/Collection'
 import { Movie } from '../models/Movie'
+import { getUrlSearchMovieById, getUrlSearchMovieByTitle } from '../utils/movieUtils'
 
-export const getMovies = async (url: string): Promise<MovieCollectionResponse> => {
+export const getMovies = async (search: string): Promise<MovieCollectionResponse> => {
   try {
+
+    const url = getUrlSearchMovieByTitle(search)
     const response = await axios.get(url)
     // TODO - custom errors handling switch status code
     if (response.status !== 200) {
@@ -20,8 +23,9 @@ export const getMovies = async (url: string): Promise<MovieCollectionResponse> =
   }
 }
 
-export const getMovie = async (url: string): Promise<Movie> => {
+export const getMovie = async (id: string): Promise<Movie> => {
   try {
+    const url = getUrlSearchMovieById(id)
     const response = await axios.get(url)
 
     // TODO - custom errors handling switch status code
