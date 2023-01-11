@@ -10,7 +10,10 @@ module.exports = withMT({
     extend: {
       maxWidth: {
         xxs: "12rem",
-      }
+      },
+      fontFamily: {
+        raleway: ['Raleway', 'sans-serif']
+      },
     },
   },
   plugins: [],
