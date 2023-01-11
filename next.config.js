@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  swcMinify: true,
   images: {
     remotePatterns: [
       {
@@ -8,6 +9,10 @@ const nextConfig = {
         hostname: 'm.media-amazon.com'
       },
     ],
+  },
+  experimental: {
+    appDir: true,
+    // enableUndici: true   use this if Node < v18
   },
 }
 
