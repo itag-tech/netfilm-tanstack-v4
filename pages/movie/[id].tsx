@@ -10,7 +10,7 @@ import { getMovie } from '../../api/movieApi'
 import { getPoster } from '../../utils/movieUtils'
 
 import Layout from '../../components/Layout'
-import { Spinner } from '../../components/Spinner'
+import { Spinner } from '../../components/Spinner/Spinner'
 
 const MovieDetail: NextPage = () => {
 

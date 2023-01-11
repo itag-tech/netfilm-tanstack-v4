@@ -7,7 +7,7 @@ import { useSearch } from '../providers/SearchProvider'
 import { getMovies } from '../api/movieApi'
 
 import MovieCard from './Card/Card'
-import { Spinner } from './Spinner'
+import { Spinner } from './Spinner/Spinner'
 
 const Collection: FC = () => {
 

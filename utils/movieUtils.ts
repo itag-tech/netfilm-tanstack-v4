@@ -1,36 +1,27 @@
-import { StaticImageData } from "next/image"
-import { Movie } from "../models/Movie"
-import placeholderImage from "../public/placeholder-film.png"
+import { API_KEY, API_URL } from "../config"
 
-// API objects & methods -------------------------------------------------
+const moviedbApiUrl = API_URL
+const apiKey = API_KEY
 
-const getBaseAutorizedUrl: () => URL = () => {
+// API URLs -------------------------------------------------
+export const getSearchMovieUrl:
+  (page: string, search: string, lang?: string) => string = (page, search, lang = "en-US") => {
+    if (!moviedbApiUrl || !apiKey) throw new Error("Missing env variables for OMDb API")
+    const baseUrl = new URL(moviedbApiUrl)
+    baseUrl
+    baseUrl.searchParams.append("apikey", apiKey)
+    baseUrl.searchParams.append("page", page)
+    baseUrl.searchParams.append("language", lang)
+    baseUrl.searchParams.append("query", search)
+    return baseUrl.toString()
+  }
 
-  const omdbApiBaseUrl = process.env.NEXT_PUBLIC_OMDB_API_URL
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY
-
-  if (!omdbApiBaseUrl || !apiKey) throw new Error("Missing env variables for OMDb API") // TODO : use a better error handling
-  const baseUrl = new URL(omdbApiBaseUrl)
+export const getPopularMovieUrl: (page: string, lang?: string) => string = (page, lang = "en-US") => {
+  if (!moviedbApiUrl || !apiKey) throw new Error("Missing env variables for OMDb API")
+  const baseUrl = new URL(moviedbApiUrl)
+  baseUrl
   baseUrl.searchParams.append("apikey", apiKey)
-
-  return baseUrl
-}
-
-export const getUrlSearchMovieByTitle: (title: string) => string = (title) => {
-  const url = getBaseAutorizedUrl()
-  url.searchParams.append("s", title)
-  return url.toString()
-}
-
-export const getUrlSearchMovieById: (id: string) => string = (id) => {
-  const url = getBaseAutorizedUrl()
-  url.searchParams.append("i", id)
-  return url.toString()
-}
-
-// Movie type methods ----------------------------------------------------
-
-export const getPoster: (movie: Movie) => StaticImageData | string = (movie) => {
-  // Note : Prefering render an image placeholder instead of a broken image
-  return (movie.Poster === "N/A" && placeholderImage) || movie.Poster
+  baseUrl.searchParams.append("page", page)
+  baseUrl.searchParams.append("language", lang)
+  return baseUrl.toString()
 }
