@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
-// Components
-import SearchInput from '../SearchInput/SearchInput'
+
 import clsx from 'clsx'
 
+import SearchInput from '../SearchInput/SearchInput'
+
 type Props = {
-  setQuery?: React.Dispatch<React.SetStateAction<string>>;
-};
+  setQuery?: React.Dispatch<React.SetStateAction<string>>
+}
 
 const Header = ({ setQuery }: Props) => (
   <div className={clsx('sticky flex top-0 z-40 w-full h-24 bg-black')}>
@@ -19,11 +20,11 @@ const Header = ({ setQuery }: Props) => (
           <Image height='42' width='42' src='/rmdb-logo-small.svg' alt='rmdb-logo-small' />
         </div>
       </Link>
-      {setQuery ? (
+      {setQuery && (
         <div className={clsx("relative flex items-center")}>
-          {/* <SearchInput setQuery={setQuery} /> */}
+          <SearchInput setQuery={setQuery} />
         </div>
-      ) : null}
+      )}
     </div>
   </div>
 )

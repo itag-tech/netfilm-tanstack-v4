@@ -1,32 +1,23 @@
-import { FC } from "react"
-import clsx from "clsx"
-import Image from "next/image"
-import { getPoster } from "../../utils/movieUtils"
-import { Movie } from "../../models/Movie"
+import clsx from 'clsx'
+import Thumb from '../Thumbnail/Thumb'
 
-type CardProps = {
-  movie: Movie
+type Props = {
+  imgUrl: string
+  title: string
+  subtitle?: string
 }
 
-const Card: FC<CardProps> = ({ movie }) => {
-  return (
-    <div
-      className={clsx("flex flex-col justify-center items-center bg-white",
-        "bg-opacity-50 rounded-lg shadow-md truncate w-full p-6")}
-    >
-      <Image
-        src={getPoster(movie)}
-        alt={movie.Title}
-        width={200}
-        height={200}
-        className={clsx("h-32 w-32 object-cover shadow-lg")}
-      />
-      <div className={clsx("flex flex-col justify-center items-center")}>
-        <p className={clsx("text-sm md:text-lg font-medium truncate max-w-xxs xl:max-w-xs text-purple-700 m-4 px-6")}>{movie.Title}</p>
-        <p className={clsx("text-sm font-medium text-purple-400")}>{movie.Year}</p>
-      </div>
-    </div >
-  )
-}
+const Card = ({ imgUrl, title, subtitle }: Props) => (
+  <div className={clsx('h-80')}>
+    <div className={clsx('relative h-full')}>
+      <Thumb imgUrl={imgUrl} />
+      {/* TODO - add a gradien on hover display and shown movie informations with animation from bottom to top */}
+      {/* <div className={clsx('absolute w-full bottom-0 px-4 py-2 rounded-b-xl bg-zinc-800')}>
+        <h2 className={clsx('text-gray-900 text-center text-sm truncate')}>{title}</h2>
+        {subtitle && <p className={clsx('text-cyan-400 text-center text-xs truncate')}>{subtitle}</p>}
+      </div> */}
+    </div>
+  </div>
+)
 
 export default Card

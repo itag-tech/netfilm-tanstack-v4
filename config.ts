@@ -1,8 +1,8 @@
 // Configuration for TMDB API
 // Read more about the API here: https://developers.themoviedb.org/
 
-const API_SEARCH_URL: string | undefined = process.env.API_SEARCH_URL
-const API_POPULAR_URL: string | undefined = process.env.API_POPULAR_URL
+const SEARCH_MOVIES_API_URL: string | undefined = process.env.SEARCH_MOVIES_API_URL
+const POPULAR_MOVIES_API_URL: string | undefined = process.env.POPULAR_MOVIES_API_URL
 const API_KEY: string | undefined = process.env.API_KEY
 
 const IMAGE_BASE_URL: string = 'http://image.tmdb.org/t/p/'
@@ -12,8 +12,8 @@ const BACKDROP_SIZE: string = 'w1280'
 const POSTER_SIZE: string = 'w780'
 
 export {
-  API_SEARCH_URL,
-  API_POPULAR_URL,
+  SEARCH_MOVIES_API_URL,
+  POPULAR_MOVIES_API_URL,
   API_KEY,
   IMAGE_BASE_URL,
   BACKDROP_SIZE,
