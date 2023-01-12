@@ -40,35 +40,38 @@ const Home: NextPage = () => {
 
         {/* MOVIES FETCHED */}
         {hasMovies && mostPopularMovie && (
-          <Hero
-            imgUrl={
-              mostPopularMovie.backdrop_path
-                ? IMAGE_BASE_URL + BACKDROP_SIZE + mostPopularMovie.backdrop_path
-                : '/no_image.jpg'
-            }
-            title={mostPopularMovie.title}
-            text={mostPopularMovie.overview}
-          />
+          <>
+            <Hero
+              imgUrl={
+                mostPopularMovie.backdrop_path
+                  ? IMAGE_BASE_URL + BACKDROP_SIZE + mostPopularMovie.backdrop_path
+                  : '/no_image.jpg'
+              }
+              title={mostPopularMovie.title}
+              text={mostPopularMovie.overview}
+            />
+
+            <Grid
+              className='p-4 max-w-7xl m-auto'
+              title={query ? `Search Results : ${data?.pages[0].total_results}` : 'Popular Movies'}
+            >
+              {data && data.pages
+                && data.pages.map(page =>
+                  page.results.map(movie => (
+                    <Link key={movie.id} href={`/${movie.id}`}>
+                      <div className='cursor-pointer hover:opacity-80 duration-300'>
+                        <Card
+                          imgUrl={movie.poster_path ? IMAGE_BASE_URL.concat(POSTER_SIZE, movie.poster_path) : '/no_image.jpg'}
+                          title={movie.original_title}
+                        />
+                      </div>
+                    </Link>
+                  ))
+                )
+              }
+            </Grid>
+          </>
         )}
-        <Grid
-          className='p-4 max-w-7xl m-auto'
-          title={query ? `Search Results: ${data?.pages[0].total_results}` : 'Popular Movies'}
-        >
-          {data && data.pages
-            && data.pages.map(page =>
-              page.results.map(movie => (
-                <Link key={movie.id} href={`/${movie.id}`}>
-                  <div className='cursor-pointer hover:opacity-80 duration-300'>
-                    <Card
-                      imgUrl={movie.poster_path ? IMAGE_BASE_URL.concat(POSTER_SIZE, movie.poster_path) : '/no_image.jpg'}
-                      title={movie.original_title}
-                    />
-                  </div>
-                </Link>
-              ))
-            )
-          }
-        </Grid>
       </>
       {/* LOADING / FETCHING */}
       {(isLoading || isFetching) && <Spinner />}
