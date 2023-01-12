@@ -38,9 +38,6 @@ const Home: NextPage = () => {
         {/* ERROR */}
         {error && <div>Oh noooooooo something went wrong!</div>}
 
-        {/* LOADING / FETCHING */}
-        {(isLoading || isFetching) && <Spinner />}
-
         {/* MOVIES FETCHED */}
         {hasMovies && mostPopularMovie && (
           <Hero
@@ -73,6 +70,8 @@ const Home: NextPage = () => {
           }
         </Grid>
       </>
+      {/* LOADING / FETCHING */}
+      {(isLoading || isFetching) && <Spinner />}
     </main>
   )
 }
