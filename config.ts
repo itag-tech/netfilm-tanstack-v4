@@ -1,8 +1,10 @@
 // Configuration for TMDB API
 // Read more about the API here: https://developers.themoviedb.org/
 
-const SEARCH_MOVIES_API_URL: string | undefined = process.env.SEARCH_MOVIES_API_URL
-const POPULAR_MOVIES_API_URL: string | undefined = process.env.POPULAR_MOVIES_API_URL
+const searchPath = "/3/search/movie"
+const popularPath = "/3/movie/popular"
+const SEARCH_MOVIES_API_URL: string | undefined = process.env.API_URL?.concat(searchPath)
+const POPULAR_MOVIES_API_URL: string | undefined = process.env.API_URL?.concat(popularPath)
 const API_KEY: string | undefined = process.env.API_KEY
 
 const IMAGE_BASE_URL: string = 'http://image.tmdb.org/t/p/'

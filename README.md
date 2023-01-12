@@ -1,11 +1,13 @@
+This project aims to try Next.js 13 using themoviedb API.
+
 ## Getting Started
 
 1 - Add environment variables
 
 Create an .env file and add this variables : 
 
-- NEXT_PUBLIC_OMDB_API_URL=*insert api url*
-- NEXT_PUBLIC_API_KEY=*insert api key*
+- API_KEY=*insert api key*
+- API_URL=*insert api url here*
 
 2 - Add modules
 
@@ -30,9 +32,3 @@ Note : the root file is `pages/index.tsx`.
 ## Informations
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-Created by Thomas Aguirregabiria
-
-
-
-

@@ -24,8 +24,8 @@ const Home: NextPage = () => {
 
   // conditional variables --------------------------------------
 
-  const hasMovies = data && data?.pages?.[0].results.length > 0
   const movies = data?.pages?.[0].results
+  const hasMovies = movies && movies.length > 0
   const mostPopularMovie = movies && movies[0]
 
   return (
@@ -40,9 +40,6 @@ const Home: NextPage = () => {
 
         {/* LOADING / FETCHING */}
         {(isLoading || isFetching) && <Spinner />}
-
-        {/* NO MOVIE DATA */}
-        {(!hasMovies) && <div>No movie dude ! Retry !</div>}
 
         {/* MOVIES FETCHED */}
         {hasMovies && mostPopularMovie && (
