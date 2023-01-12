@@ -3,8 +3,10 @@
 
 const searchPath = "/3/search/movie"
 const popularPath = "/3/movie/popular"
+const moviePath = "/3/movie"
 const SEARCH_MOVIES_API_URL: string | undefined = process.env.API_URL?.concat(searchPath)
 const POPULAR_MOVIES_API_URL: string | undefined = process.env.API_URL?.concat(popularPath)
+const MOVIE_DETAIL_API_URL: string | undefined = process.env.API_URL?.concat(moviePath)
 const API_KEY: string | undefined = process.env.API_KEY
 
 const IMAGE_BASE_URL: string = 'http://image.tmdb.org/t/p/'
@@ -16,6 +18,7 @@ const POSTER_SIZE: string = 'w780'
 export {
   SEARCH_MOVIES_API_URL,
   POPULAR_MOVIES_API_URL,
+  MOVIE_DETAIL_API_URL,
   API_KEY,
   IMAGE_BASE_URL,
   BACKDROP_SIZE,

@@ -58,7 +58,7 @@ const Home: NextPage = () => {
               {data && data.pages
                 && data.pages.map(page =>
                   page.results.map(movie => (
-                    <Link key={movie.id} href={`/${movie.id}`}>
+                    <Link key={movie.id} href={`/movie/${movie.id}`}>
                       <div className='cursor-pointer hover:opacity-80 duration-300'>
                         <Card
                           imgUrl={movie.poster_path ? IMAGE_BASE_URL.concat(POSTER_SIZE, movie.poster_path) : '/no_image.jpg'}

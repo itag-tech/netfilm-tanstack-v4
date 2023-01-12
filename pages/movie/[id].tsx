@@ -1,60 +1,79 @@
+import { IMAGE_BASE_URL, BACKDROP_SIZE, POSTER_SIZE } from '../../config'
+// Basic fetch
+import { basicFetch } from '../../api/fetchFunctions'
+// Components
+import Header from '../../components/Header/Header'
+import Breadcrumb from '../../components/Breadcrumb/Breadcrumb'
+import MovieInfo from '../../components/MovieInfo/MovieInfo'
+import Grid from '../../components/Grid/Grid'
+import Card from '../../components/Card/Card'
+// Types
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import type { Movie, Credits, Crew, Cast } from '../../api/types'
+import { getCreditUrl, getMovieUrl } from '../../utils/apiUrlsBuilder'
 
-// import React from 'react'
-// import clsx from 'clsx'
-// import Image from 'next/image'
-// import { NextPage } from 'next'
-// import { useRouter } from 'next/router'
-// import { useQuery } from '@tanstack/react-query'
+type MovieProps = {
+  movie: Movie
+  directors: Crew[]
+  cast: Cast[]
+}
 
-// import { getMovie } from '../../api/movieApi'
-// import { getPoster } from '../../utils/apiUrlsBuilder'
+const Movie: NextPage<MovieProps> = ({ movie, cast, directors }) => (
+  <main>
+    <Header />
+    <Breadcrumb title={movie.original_title} />
+    <MovieInfo
+      thumbUrl={movie.poster_path ? IMAGE_BASE_URL + POSTER_SIZE + movie.poster_path : '/no_image.jpg'}
+      rating={movie.vote_average}
+      year={movie.release_date.split('-')[0]}
+      backgroundImgUrl={movie.backdrop_path ? IMAGE_BASE_URL + BACKDROP_SIZE + movie.backdrop_path : '/no_image.jpg'}
+      title={movie.original_title}
+      summary={movie.overview}
+      directors={directors}
+      time={movie.runtime}
+      budget={movie.budget}
+      revenue={movie.revenue}
+    />
+    <Grid className='p-4 max-w-7xl m-auto' title='Actors'>
+      {cast.map(actor => (
+        <Card
+          key={actor.credit_id}
+          imgUrl={actor.profile_path ? IMAGE_BASE_URL + POSTER_SIZE + actor.profile_path : '/no_image.jpg'}
+          title={actor.name}
+          subtitle={actor.character}
+        />
+      ))}
+    </Grid>
+  </main>
+)
 
-// import Layout from '../../components/Layout'
-// import { Spinner } from '../../components/Spinner/Spinner'
+export default Movie
 
-// const MovieDetail: NextPage = () => {
+export const getStaticProps: GetStaticProps = async context => {
+  const id = context.params?.id as string
 
-//   const router = useRouter()
-//   const { id } = router.query
+  const movieEndpoint: string = getMovieUrl(id)
+  const creditsEndpoint: string = getCreditUrl(id)
 
-//   const { isLoading, data: movie, error } = useQuery({
-//     queryKey: ['movie', id],
-//     queryFn: () => getMovie(id as string),
-//   })
+  const movie = await basicFetch<Movie>(movieEndpoint)
+  const credits = await basicFetch<Credits>(creditsEndpoint)
 
-//   if (error) return <Layout><p>Une erreur est survenue</p></Layout>
-//   if (isLoading) return <Layout><Spinner color={"purple"} size={"80px"} /></Layout>
-//   if (!movie) return <Layout><p>Aucun résultat</p></Layout >
-//   return (
-//     <Layout>
-//       <div className={clsx("flex flex-col justify-center items-center text-center py-12 px-6")}>
-//         <Image
-//           src={getPoster(movie)}
-//           alt={movie.Title}
-//           width={150}
-//           height={150}
-//           className={clsx("object-cover h-64 w-64 shadow-lg")}
-//         />
-//         <h1 className={clsx("pt-12")}>{movie?.Title}</h1>
-//         <h3 className={clsx("p-2")}>{movie?.Gender}</h3>
-//         <p className={clsx("italic")}>{movie?.Year}</p>
-//         <p className={clsx("italic")}>{movie?.Actors}</p>
-//         <p className={clsx("italic")}>{movie?.Director}</p>
-//         <div className={clsx("text-center w-4/5 md:w-1/2 bg-white rounded bg-opacity-50 my-12")}>
-//           <p className={clsx("p-2")}>
-//             {movie?.Plot}
-//           </p>
-//         </div>
-//         <button
-//           className={clsx("font-bold")}
-//           onClick={() => router.back()}
-//           aria-label="Revenir à la page précédente de recherche de films"
-//         >
-//           Précédent
-//         </button>
-//       </div>
-//     </Layout>
-//   )
-// }
+  // Get the directors only
+  const directors = credits.crew.filter(member => member.job === 'Director')
 
-// export default MovieDetail
+  return {
+    props: {
+      movie,
+      directors,
+      cast: credits.cast
+    },
+    revalidate: 60 * 60 * 24 // Re-build page every 24 hours
+  }
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking'
+  }
+}
