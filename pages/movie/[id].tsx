@@ -1,16 +1,20 @@
-import { IMAGE_BASE_URL, BACKDROP_SIZE, POSTER_SIZE } from '../../config'
-// Basic fetch
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import clsx from 'clsx'
+
 import { basicFetch } from '../../api/fetchFunctions'
-// Components
+import { getCreditUrl, getMovieUrl } from '../../utils/apiUrlsBuilder'
+import { BACKDROP_SIZE, IMAGE_BASE_URL, NO_IMG_URL, POSTER_SIZE } from '../../utils/constants'
+
+import { Cast } from '../../models/Cast'
+import { Credits } from '../../models/Credits'
+import { Crew } from '../../models/Crew'
+import { Movie } from '../../models/Movie'
+
 import Header from '../../components/Header/Header'
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb'
 import MovieInfo from '../../components/MovieInfo/MovieInfo'
 import Grid from '../../components/Grid/Grid'
 import Card from '../../components/Card/Card'
-// Types
-import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
-import type { Movie, Credits, Crew, Cast } from '../../api/types'
-import { getCreditUrl, getMovieUrl } from '../../utils/apiUrlsBuilder'
 
 type MovieProps = {
   movie: Movie
@@ -23,10 +27,10 @@ const Movie: NextPage<MovieProps> = ({ movie, cast, directors }) => (
     <Header />
     <Breadcrumb title={movie.original_title} />
     <MovieInfo
-      thumbUrl={movie.poster_path ? IMAGE_BASE_URL + POSTER_SIZE + movie.poster_path : '/no_image.jpg'}
+      thumbUrl={movie.poster_path ? IMAGE_BASE_URL.concat(POSTER_SIZE, movie.poster_path) : NO_IMG_URL}
       rating={movie.vote_average}
       year={movie.release_date.split('-')[0]}
-      backgroundImgUrl={movie.backdrop_path ? IMAGE_BASE_URL + BACKDROP_SIZE + movie.backdrop_path : '/no_image.jpg'}
+      backgroundImgUrl={movie.backdrop_path ? IMAGE_BASE_URL.concat(BACKDROP_SIZE, movie.backdrop_path) : NO_IMG_URL}
       title={movie.original_title}
       summary={movie.overview}
       directors={directors}
@@ -34,11 +38,11 @@ const Movie: NextPage<MovieProps> = ({ movie, cast, directors }) => (
       budget={movie.budget}
       revenue={movie.revenue}
     />
-    <Grid className='p-4 max-w-7xl m-auto' title='Actors'>
+    <Grid className={clsx('p-4 max-w-7xl m-auto')} title='Actors'>
       {cast.map(actor => (
         <Card
           key={actor.credit_id}
-          imgUrl={actor.profile_path ? IMAGE_BASE_URL + POSTER_SIZE + actor.profile_path : '/no_image.jpg'}
+          imgUrl={actor.profile_path ? IMAGE_BASE_URL.concat(POSTER_SIZE, actor.profile_path) : NO_IMG_URL}
           title={actor.name}
           subtitle={actor.character}
         />

@@ -1,10 +1,10 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
-type Props = {
-  title: string;
-};
+type BreadcrumbProps = {
+  title: string
+}
 
-const Breadcrumb = ({ title }: Props) => (
+const Breadcrumb = ({ title }: BreadcrumbProps) => (
   <div className='bg-gray-800'>
     <div className='flex items-center max-w-7xl m-auto p-4 text-white text-lg'>
       <Link href='/'>
@@ -14,6 +14,6 @@ const Breadcrumb = ({ title }: Props) => (
       <span className='font-bold truncate'>{title}</span>
     </div>
   </div>
-);
+)
 
-export default Breadcrumb;
+export default Breadcrumb

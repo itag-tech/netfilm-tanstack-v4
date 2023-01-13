@@ -1,13 +1,13 @@
 import clsx from 'clsx'
 import Thumb from '../Thumbnail/Thumb'
 
-type Props = {
+type CardProps = {
   imgUrl: string
   title: string
   subtitle?: string
 }
 
-const Card = ({ imgUrl, title, subtitle }: Props) => (
+const Card = ({ imgUrl, title, subtitle }: CardProps) => (
   <div className={clsx('h-80')}>
     <div className={clsx('relative h-full')}>
       <Thumb imgUrl={imgUrl} />

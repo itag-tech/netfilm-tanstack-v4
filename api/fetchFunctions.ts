@@ -1,6 +1,4 @@
-import axios from 'axios'
-import { getSearchMovieUrl } from '../utils/apiUrlsBuilder'
-import { Movies } from "./types"
+import { Movies } from "../models/Movie";
 
 export const basicFetch = async <returnType>(url: string): Promise<returnType> => {
   const response = await fetch(url);
@@ -12,7 +10,7 @@ export const basicFetch = async <returnType>(url: string): Promise<returnType> =
   return data;
 }
 
-// Fetch functions
+// Fetch functions ------------------------------------
 export const fetchMovies = async (search = '', page = "1"): Promise<Movies> => {
   return await basicFetch<Movies>(`/api/movies?search=${search}&page=${page}`)
 }

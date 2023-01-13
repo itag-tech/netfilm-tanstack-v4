@@ -3,8 +3,8 @@ import { NextPage } from 'next'
 import Link from 'next/link'
 import clsx from 'clsx'
 
-import { BACKDROP_SIZE, IMAGE_BASE_URL, POSTER_SIZE } from '../config'
 import { useFetchMovies } from '../api/fetchHook'
+import { BACKDROP_SIZE, IMAGE_BASE_URL, NO_IMG_URL, POSTER_SIZE } from '../utils/constants'
 
 import Header from '../components/Header/Header'
 import Hero from '../components/Hero/Hero'
@@ -22,7 +22,7 @@ const Home: NextPage = () => {
     if (scrollHeight - scrollTop === clientHeight) fetchNextPage();
   }
 
-  // conditional variables --------------------------------------
+  // local util variables  --------------------------------------
 
   const movies = data?.pages?.[0].results
   const hasMovies = movies && movies.length > 0
@@ -32,11 +32,10 @@ const Home: NextPage = () => {
     <main className={clsx("relative h-screen overflow-y-scroll")} onScroll={handleScroll}>
       <Header setQuery={setQuery} />
       <>
-
         {/* conditional rendering -------------------------------------- */}
 
         {/* ERROR */}
-        {error && <div>Oh noooooooo something went wrong!</div>}
+        {error && <div>Oh noooooooo something went wrong !</div>}
 
         {/* MOVIES FETCHED */}
         {hasMovies && mostPopularMovie && (
@@ -44,8 +43,8 @@ const Home: NextPage = () => {
             <Hero
               imgUrl={
                 mostPopularMovie.backdrop_path
-                  ? IMAGE_BASE_URL + BACKDROP_SIZE + mostPopularMovie.backdrop_path
-                  : '/no_image.jpg'
+                  ? IMAGE_BASE_URL.concat(BACKDROP_SIZE, mostPopularMovie.backdrop_path)
+                  : NO_IMG_URL
               }
               title={mostPopularMovie.title}
               text={mostPopularMovie.overview}
@@ -61,7 +60,7 @@ const Home: NextPage = () => {
                     <Link key={movie.id} href={`/movie/${movie.id}`}>
                       <div className='cursor-pointer hover:opacity-80 duration-300'>
                         <Card
-                          imgUrl={movie.poster_path ? IMAGE_BASE_URL.concat(POSTER_SIZE, movie.poster_path) : '/no_image.jpg'}
+                          imgUrl={movie.poster_path ? IMAGE_BASE_URL.concat(POSTER_SIZE, movie.poster_path) : NO_IMG_URL}
                           title={movie.original_title}
                         />
                       </div>

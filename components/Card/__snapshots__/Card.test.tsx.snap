@@ -1,0 +1,25 @@
+// Vitest Snapshot v1
+
+exports[`Card > should render as usual 1`] = `
+<div>
+  <div
+    class="h-80"
+  >
+    <div
+      class="relative h-full"
+    >
+      <img
+        alt="movie thumbnail"
+        class="absolute top-0 left-0 w-full h-full object-cover rounded-lg"
+        data-nimg="1"
+        decoding="async"
+        height="200"
+        loading="lazy"
+        src=""
+        style="color: transparent; background-size: cover; background-position: 50% 50%; background-repeat: no-repeat;"
+        width="200"
+      />
+    </div>
+  </div>
+</div>
+`;
