@@ -10,8 +10,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   const endpoint = search ? getSearchMovieUrl(page as string, search as string) : getPopularMovieUrl(page as string)
 
-  const data = await basicFetch<Movies>(endpoint);
+  const data = await basicFetch<Movies>(endpoint)
 
-  res.status(200).json(data);
+  res.status(200).json(data)
 
 }

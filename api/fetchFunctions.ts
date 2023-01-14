@@ -1,16 +1,18 @@
-import { Movies } from "../models/Movie";
+import ky from 'ky'
+import { Movies } from "../models/Movie"
 
-export const basicFetch = async <returnType>(url: string): Promise<returnType> => {
-  const response = await fetch(url);
+export const basicFetch = async <ReturnType>(url: string): Promise<ReturnType> => {
 
-  if (!response.ok) throw new Error('Error!');
+  const response = await ky.get(url)
 
-  const data = await response.json();
+  if (!response.ok) throw new Error('Error!')
 
-  return data;
+  return await response.json()
 }
 
 // Fetch functions ------------------------------------
 export const fetchMovies = async (search = '', page = "1"): Promise<Movies> => {
+
+  // here is the route of the "api" folder in "pages" folder
   return await basicFetch<Movies>(`/api/movies?search=${search}&page=${page}`)
 }

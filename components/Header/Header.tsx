@@ -5,11 +5,11 @@ import clsx from 'clsx'
 
 import SearchInput from '../SearchInput/SearchInput'
 
-type Props = {
+type HeaderProps = {
   setQuery?: React.Dispatch<React.SetStateAction<string>>
 }
 
-const Header = ({ setQuery }: Props) => (
+const Header = ({ setQuery }: HeaderProps) => (
   <div className={clsx('sticky flex top-0 z-40 w-full h-24 bg-black')}>
     <div className={clsx('flex justify-between w-full h-full max-w-7xl m-auto px-4')}>
       <Link href='/' className={clsx('flex items-center cursor-pointer')}>

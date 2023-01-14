@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { Movies } from '../models/Movie';
+import { Movies } from '../models/Movie'
 import { fetchMovies } from './fetchFunctions'
 
 export const useFetchMovies = (search: string) => {
